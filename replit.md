@@ -1,0 +1,138 @@
+# EMOAI - Full-Stack Emotional Wellness App
+
+## Overview
+
+EmoAI is a comprehensive full-stack web application designed to help users improve their lives through AI-powered support. It helps users quit bad habits, build better ones, and achieve personal goals through emotionally intelligent conversations. The app provides daily check-ins, personalized advice, habit tracking with streaks, voice interactions, and automatic journaling. It leverages Google's Generative AI (Gemini 2.0) to power a feeling-first, goal-oriented companion that understands emotional subtext while offering practical guidance.
+
+## User Preferences
+
+Preferred communication style: Simple, everyday language.
+
+## System Architecture
+
+### UI/UX Decisions
+
+The application features an elegant, sophisticated Wix Studio-inspired aesthetic with a warm color palette. Key design elements include:
+
+-   **Color Scheme**: Warm browns, teals, beige backgrounds (RGB(249,244,233)), sage green accents (RGB(107, 169, 159)), peach highlights (RGB(232, 181, 166)), and lavender touches (RGB(201, 181, 227)).
+-   **Typography**: Playfair Display serif for headings and Inter for body text.
+-   **Visuals**: High-quality 3D stock illustrations integrated across hero sections, soft gradients, subtle shadows, and floating decorative shapes.
+-   **Layout**: Split-screen authentication pages and a responsive design optimized for all screen sizes.
+
+### Technical Implementations
+
+-   **Frontend**: Built with Vanilla JavaScript, HTML5, and CSS3, focusing on a lightweight, no-framework approach for focused functionality and accessibility.
+-   **Backend**: Flask 3.0+ framework utilizing Flask-Login for secure authentication, Flask-SQLAlchemy for ORM, and Flask-Bcrypt for password hashing. It follows an MVC pattern with route-based organization.
+-   **Database**: SQLite with SQLAlchemy ORM for data persistence.
+-   **Timezone**: Entire application operates on IST (Indian Standard Time, GMT+5:30) for all datetime operations, timestamps, and scheduling.
+-   **AI/ML**: Google Generative AI (Gemini 2.0 Flash) is used for multiple purposes:
+    - Conversational AI with emotional intelligence
+    - Event extraction from natural language
+    - Calendar query detection and date parsing
+    - Sentiment analysis for adaptive responses
+    - Sleep pattern analysis
+    - Journal summarization
+-   **Authentication & Security**: Implemented using Flask-Login and Bcrypt for password hashing, session cookie encryption, CSRF protection, XSS prevention, and user data isolation.
+
+### Feature Specifications
+
+-   **User Management**: Secure signup/login, onboarding for collecting user goals.
+-   **AI Chat**: Personalized, empathetic conversational AI companion for habit-quitting, life improvement, and emotional support. Responses are kept very short (1-2 sentences) yet meaningful and actionable. Includes voice-to-text input and text-to-speech responses using Web Speech API.
+-   **Goals & Activities**: 
+    - Separate interfaces for "Quit Bad Habits" vs "Build New Skills"
+    - Different activity types for each goal category
+    - Visual progress tracking with colored progress bars
+    - Habits activities: Deep Breathing, Take a Walk, Journal Entry
+    - Achievement activities: Practice Session, Complete Lesson, Do Exercise
+-   **Positive Reinforcement**: Swiggy-style motivational toast notifications that appear after completing activities, with context-aware encouraging messages
+-   **Sleep Tracker**: Advanced sleep intelligence system with AI-powered analysis:
+    - Automatic sleep quality scoring (0-100 scale) based on duration and quality
+    - Premium circular score visualization with animated SVG rings
+    - AI-powered sleep analysis using Gemini 2.0 that analyzes weekly sleep patterns
+    - Personalized AI insights after each sleep log with actionable recommendations
+    - Quality slider interface for rating sleep experience
+    - Automatic hour calculation from bedtime/wake time
+    - Color-coded sleep scores (Excellent/Good/Fair/Poor)
+    - AI generates feeling-first, supportive sleep improvement suggestions
+    - Sleep metrics: Duration Quality, Consistency, Sleep Efficiency
+    - 14-day sleep history with quality badges
+-   **Journaling**: AI-generated conversation summaries, mood tracking, goal progress notes, and historical journal entry viewing.
+-   **Journal Analytics**: Comprehensive insights dashboard with:
+    - Multiple interactive graphs (mood trends, sentiment distribution, entry frequency, word frequency)
+    - AI-powered insights analyzing emotional profile, dominant themes, thought patterns, and growth areas
+    - Statistical analysis: total entries, average words, most common mood, journaling streak
+    - Pattern recognition identifying themes like goal-setting, emotional awareness, growth, relationships
+    - Smart sentiment detection categorizing entries as positive, neutral, reflective, or growth-focused
+    - Word frequency analysis showing most meaningful terms (filters stop words)
+    - Requires minimum 1 journal entry to unlock analytics
+-   **Reminders & Habits**: Daily personalized reminder popups, custom reminder creation and management, habit progress tracking, and a 7-day streak visualization.
+-   **Time-based Reminder System**: Browser-based popup notifications:
+    - Automatic check every 60 seconds for due reminders
+    - Popup notifications at exact scheduled times
+    - Silent popup messages (no alarm sound)
+    - Delete functionality for managing reminder list
+    - Auto-dismisses after 30 seconds if not interacted with
+-   **Calendar Event Extraction & Visual Calendar**: Comprehensive calendar system with AI-powered event detection and visual interface:
+    - AI extracts event details (title, date, time, location) from natural conversations
+    - Server-side validation ensures only future dates are accepted
+    - User confirmation workflow with edit capability before adding to calendar
+    - Custom visual calendar interface accessible from top navigation
+    - Month grid view with day-by-day event display
+    - Color-coded dates: today highlighting, event indicators, other-month styling
+    - Click any date to view all events in a modal popup
+    - Event preview bubbles on calendar dates (max 2 shown, "+N more" indicator)
+    - Edit and delete functionality for all calendar events
+    - Full event editing: modify title, date, time, location, and description
+    - Automatic Google Calendar OAuth2 sync for confirmed events
+    - Automatic reminder creation at exact event times
+    - Event cards display creation context (original message that triggered detection)
+-   **Calendar Query Feature**: Natural language calendar queries with AI-powered date parsing:
+    - Ask questions like "What's my schedule tomorrow?" or "Show me events this week"
+    - AI detects calendar queries and parses date ranges from natural language
+    - Fetches confirmed events from database within requested timeframe
+    - Presents events in warm, conversational format through the AI chat
+    - Supports queries for specific days, weeks, or custom date ranges
+-   **Wellness Score Dashboard**: Comprehensive 0-100 health scoring system combining multiple wellness metrics:
+    - Overall wellness score calculated from 4 equally-weighted categories (25% each)
+    - Mood Trends: Based on recent journal entry sentiments
+    - Sleep Quality: Average of recent sleep scores
+    - Habit Streaks: Consistency of goal activities
+    - Journal Consistency: Frequency of journaling
+    - Animated circular progress ring visualization with category breakdown
+    - Score categorization (Excellent 80+, Good 60-79, Fair 40-59, Needs Attention <40)
+-   **Dynamic AI Personality**: Real-time sentiment analysis that adapts bot responses to user's emotional state:
+    - Analyzes user message sentiment (positive, negative, neutral, anxious)
+    - Adapts conversation tone: cheerful/uplifting when user is sad, celebratory when happy, calming when anxious
+    - Works from first message with no conversation history needed
+    - Maintains emotional intelligence core while adjusting delivery style
+-   **Event Memory & Follow-up System**: Intelligent event tracking and automatic follow-up questions:
+    - AI remembers events mentioned in conversations
+    - Automatically detects when events have passed (checks yesterday's events)
+    - Generates context-aware follow-up questions the day after events occur
+    - Helps maintain continuity and shows the AI "cares" about user's life
+-   **Data Management**: Chat history and habit progress are stored in the database, with automatic cleanup of habit progress older than 30 days.
+
+### System Design Choices
+
+-   **Database-backed Chat History**: Stores chat messages in SQLite to overcome session cookie limitations.
+-   **Per-user Data Isolation**: All user data is securely scoped to the authenticated user.
+-   **Stateless AI Calls**: Each AI request includes the complete conversation history for continuity, maintaining a session-like experience without stateful AI processing.
+
+## External Dependencies
+
+### Third-party Services
+
+-   **Google Generative AI (Gemini 2.0 API)**: Powers the conversational AI and summarization features. Configured via the `GOOGLE_API_KEY` environment variable.
+
+### Python Packages
+
+-   **Flask** (>=3.0.0): Web framework.
+-   **Flask-Login** (>=0.6.3): User session management and authentication.
+-   **Flask-SQLAlchemy** (>=3.1.1): ORM for database operations.
+-   **Flask-Bcrypt** (>=1.0.1): Password hashing and verification.
+-   **google-generativeai** (>=0.3.0): Official Google SDK for Generative AI.
+
+### Environment Variables
+
+-   `GOOGLE_API_KEY`: Required for Google Generative AI services.
+-   `SECRET_KEY`: Optional, used for Flask session encryption.
